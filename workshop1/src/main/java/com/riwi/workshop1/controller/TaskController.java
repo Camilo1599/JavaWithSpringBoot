@@ -6,10 +6,7 @@ import com.riwi.workshop1.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/task")
@@ -27,10 +24,10 @@ public class TaskController {
     @GetMapping("/create")
     public String createTaskForm(Model model){
         model.addAttribute("task", new Task());
-        return "task/create";
+        return "taskForm";
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     public String createTask(@ModelAttribute Task task){
         taskService.saveTask(task);
         return "redirect:/tasks";
@@ -43,7 +40,7 @@ public class TaskController {
         return "task/edit";
     }
 
-    @GetMapping("/edit/{id}")
+    @PostMapping("/edit/{id}")
     public String updateTask(@PathVariable Long id,@ModelAttribute Task task){
         task.setId(id);
         taskService.saveTask(task);
